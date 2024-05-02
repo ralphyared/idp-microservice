@@ -8,7 +8,7 @@ import "../global/types";
 import mongoose from "mongoose";
 import { SignupDto } from "./dto/signup.dto";
 import { LoginDto } from "./dto/login.dto";
-import { EditProfileDto } from "./dto/editProfile.dto";
+import { EditProfileDto } from "./dto/edit-profile.dto";
 
 export const signup = async (body: SignupDto) => {
   const { firstName, lastName, email, password, dateOfBirth } = body;

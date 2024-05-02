@@ -5,7 +5,7 @@ import { CustomError } from "../global/classes.js";
 import { userErrorMessages } from "./user.error.js";
 import { SignupDto } from "./dto/signup.dto.js";
 import { LoginDto } from "./dto/login.dto.js";
-import { EditProfileDto } from "./dto/editProfile.dto.js";
+import { EditProfileDto } from "./dto/edit-profile.dto.js";
 
 export const signup = async (
   req: Request,
