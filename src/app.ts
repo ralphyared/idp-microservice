@@ -4,7 +4,7 @@ import express, { ErrorRequestHandler } from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 
-import userRoutes from "./user/user.routes.js";
+import userRoutes from "./users/user.routes.js";
 
 const port = 3001;
 
