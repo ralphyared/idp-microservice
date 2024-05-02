@@ -5,15 +5,13 @@ import User from "./user.model";
 import { userErrorMessages } from "./user.error";
 
 import "../global/types";
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
+import { SignupDto } from "./dto/signup.dto";
+import { LoginDto } from "./dto/login.dto";
+import { EditProfileDto } from "./dto/editProfile.dto";
 
-export const signup = async (
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  dateOfBirth: Date
-) => {
+export const signup = async (body: SignupDto) => {
+  const { firstName, lastName, email, password, dateOfBirth } = body;
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     const err = new CustomError(
@@ -39,7 +37,8 @@ export const signup = async (
   return { token, userId };
 };
 
-export const login = async (email: string, password: string) => {
+export const login = async (body: LoginDto) => {
+  const { email, password } = body;
   const user = await User.findOne({ email });
   if (!user) {
     const err = new CustomError(
@@ -86,7 +85,10 @@ export const viewProfile = async (user: any) => {
   };
 };
 
-export const editProfile = async (id: mongoose.Types.ObjectId, body: any) => {
+export const editProfile = async (
+  id: mongoose.Types.ObjectId,
+  body: EditProfileDto
+) => {
   const { firstName, lastName, dateOfBirth } = body;
   return User.findOneAndUpdate(
     { _id: id },
