@@ -5,10 +5,12 @@ import User from "./user.model";
 import { userErrorMessages } from "./user.error";
 
 import "../global/types";
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { SignupDto } from "./dto/signup.dto";
 import { LoginDto } from "./dto/login.dto";
 import { EditProfileDto } from "./dto/edit-profile.dto";
+import config from "../global/config";
+import { UserDocument } from "../global/types";
 
 export const signup = async (body: SignupDto) => {
   const { firstName, lastName, email, password, dateOfBirth } = body;
@@ -63,11 +65,13 @@ export const login = async (body: LoginDto) => {
   return { token, userId };
 };
 
-const signUserJwt = async (user: any) => {
-  const userObj = { ...user }._doc;
+const signUserJwt = async (user: Document) => {
+  const userObj = user.toObject();
   delete userObj.password;
 
-  const token = jwt.sign(userObj, process.env.JWT_SECRET!);
+  const token = jwt.sign(userObj, config().authConfig.jwtSecret, {
+    expiresIn: config().authConfig.jwtExpiration,
+  });
 
   return token;
 };
@@ -76,8 +80,9 @@ export const findUserById = async (id: mongoose.Types.ObjectId) => {
   return User.findOne({ _id: id });
 };
 
-export const viewProfile = async (user: any) => {
+export const viewProfile = async (user: UserDocument) => {
   return {
+    id: user._id,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,

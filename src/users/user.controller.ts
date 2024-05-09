@@ -6,6 +6,7 @@ import { userErrorMessages } from "./user.error.js";
 import { SignupDto } from "./dto/signup.dto.js";
 import { LoginDto } from "./dto/login.dto.js";
 import { EditProfileDto } from "./dto/edit-profile.dto.js";
+import { UserDocument } from "../global/types.js";
 
 export const signup = async (
   req: Request,
@@ -40,7 +41,7 @@ export const viewProfile = async (
 ) => {
   try {
     const user = await service.findUserById(req.user);
-    const result = await service.viewProfile(user);
+    const result = await service.viewProfile(user as UserDocument);
     res.send(result);
   } catch (err) {
     const error = new CustomError(

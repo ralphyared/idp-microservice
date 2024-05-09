@@ -1,3 +1,5 @@
+import { CustomError } from "../global/classes";
+
 export const userErrorMessages = {
   emailAlreadyInUse: {
     status: 409,

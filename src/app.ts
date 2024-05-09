@@ -5,8 +5,9 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 
 import userRoutes from "./users/user.routes.js";
+import config from "./global/config.js";
 
-const port = 3001;
+const port = config().portConfig.port;
 
 const app = express();
 
@@ -19,7 +20,7 @@ const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
 };
 
 const connectDB = async () => {
-  await mongoose.connect(process.env.DB_URL!);
+  await mongoose.connect(config().dbConfig.dbUrl);
 };
 
 try {

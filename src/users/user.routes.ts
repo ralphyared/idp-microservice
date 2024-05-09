@@ -14,8 +14,6 @@ router.post("/signup", validate(signupSchema), signup);
 
 router.post("/login", validate(loginSchema), login);
 
-router.post("/auth", isAuthenticated);
-
 router.get("/profile", isAuthenticated, viewProfile);
 
 router.put(
