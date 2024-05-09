@@ -1,6 +1,5 @@
 import { compareSync, hash } from "bcrypt";
 import jwt from "jsonwebtoken";
-import { CustomError } from "../global/classes";
 import User from "./user.model";
 import { userErrorMessages } from "./user.error";
 
@@ -16,11 +15,7 @@ export const signup = async (body: SignupDto) => {
   const { firstName, lastName, email, password, dateOfBirth } = body;
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    const err = new CustomError(
-      userErrorMessages.emailAlreadyInUse.message,
-      userErrorMessages.emailAlreadyInUse.status
-    );
-    throw err;
+    throw userErrorMessages.emailAlreadyInUse;
   }
 
   const hashedPw = await hash(password, 12);
@@ -43,21 +38,12 @@ export const login = async (body: LoginDto) => {
   const { email, password } = body;
   const user = await User.findOne({ email });
   if (!user) {
-    const err = new CustomError(
-      userErrorMessages.emailNotFound.message,
-      userErrorMessages.emailNotFound.status
-    );
-    throw err;
+    throw userErrorMessages.emailNotFound;
   }
 
   const isEqual = compareSync(password, user.password!);
   if (!isEqual) {
-    const err = new CustomError(
-      userErrorMessages.wrongPassword.message,
-      userErrorMessages.wrongPassword.status
-    );
-
-    throw err;
+    throw userErrorMessages.wrongPassword;
   }
   const userId = user._id;
   const token = await signUserJwt(user);

@@ -14,8 +14,10 @@ const app = express();
 const server = http.createServer(app);
 
 const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  const status = error.statusCode || 500;
-  const messages = status == 400 ? error.messages : [error.message];
+  const status = error.status || 500;
+  const messages = error.messages
+    ? error.messages.toString()
+    : [error.messages.toString()];
   res.status(status).send({ messages });
 };
 

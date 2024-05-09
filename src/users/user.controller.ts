@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
 import * as service from "./user.service.js";
-import { CustomError } from "../global/classes.js";
 import { userErrorMessages } from "./user.error.js";
 import { SignupDto } from "./dto/signup.dto.js";
 import { LoginDto } from "./dto/login.dto.js";
@@ -40,15 +39,11 @@ export const viewProfile = async (
   next: NextFunction
 ) => {
   try {
-    const user = await service.findUserById(req.user);
+    const user = await service.findUserById(req.user.id);
     const result = await service.viewProfile(user as UserDocument);
     res.send(result);
   } catch (err) {
-    const error = new CustomError(
-      userErrorMessages.userNotFound.message,
-      userErrorMessages.userNotFound.status
-    );
-    next(error);
+    next(userErrorMessages.userNotFound);
   }
 };
 
@@ -61,10 +56,6 @@ export const editProfile = async (
     await service.editProfile(req.user, req.body as EditProfileDto);
     res.end();
   } catch (err) {
-    const error = new CustomError(
-      userErrorMessages.userNotFound.message,
-      userErrorMessages.userNotFound.status
-    );
-    next(error);
+    next(userErrorMessages.userNotFound);
   }
 };
