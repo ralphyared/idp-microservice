@@ -11,6 +11,7 @@ export const isAuthenticated = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("isAuthenticated middleware");
   const authHeader = req.get("Authorization");
 
   if (!authHeader) {
@@ -42,6 +43,7 @@ export const isAuthenticated = async (
   const payload = {
     id: userId as ObjectId,
     dateOfBirth: (decodedToken as JwtPayload).dateOfBirth as Date,
+    name: (decodedToken as JwtPayload).name as string,
   };
 
   req.user = payload;
