@@ -11,7 +11,6 @@ export const isAuthenticated = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("isAuthenticated middleware");
   const authHeader = req.get("Authorization");
 
   if (!authHeader) {
