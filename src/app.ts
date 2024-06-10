@@ -3,9 +3,28 @@ import http from "http";
 import express, { ErrorRequestHandler } from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import * as commonUtils from '@eurisko/common-utils-node';
 
 import userRoutes from "./users/user.routes.js";
 import config from "./global/config.js";
+
+commonUtils.init({
+  loggerOptions: {
+    level: config().loggerConfig.level,
+    useConsoleLogs: true,
+  },
+  databaseOptions: {
+    isMultiTenant: false,
+    connectionUri: config().dbConfig.dbUrl,
+  },
+  s3Config: {
+    accessKeyId: config().awsConfig.accessKeyId!,
+    ACL: config().awsConfig.acl!,
+    bucket: config().awsConfig.bucketName!,
+    region: config().awsConfig.region!,
+    secretAccessKey: config().awsConfig.secretAccessKey!,
+  }
+});
 
 const port = config().portConfig.port;
 

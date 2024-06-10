@@ -2,6 +2,7 @@ import { compareSync, hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "./user.model";
 import { userErrorMessages } from "./user.error";
+import commonUtils, { UploadFields } from "@eurisko/common-utils-node";
 
 import "../global/types";
 import mongoose, { Document } from "mongoose";
@@ -86,3 +87,22 @@ export const editProfile = async (
     { firstName, lastName, dateOfBirth }
   );
 };
+
+// export const uploadProfilePicture = async (
+//   id: mongoose.Types.ObjectId,
+//   body: any
+// ) => {
+//   const user = await User.findById(id);
+
+//   if (!user) {
+//     throw userErrorMessages.userNotFound;
+//   }
+
+//   const fields: [UploadFields] = [{
+//     name: "profilePicture",
+//     isMultiple: false,
+//     path: __dirname,
+// }];
+
+// commonUtils.handleFilesFormData(fields, files, body)
+// }

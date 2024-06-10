@@ -14,8 +14,23 @@ const getAuthConfig = () => ({
   saltRounds: 12,
 });
 
+const getLoggerConfig = () => ({
+  level: process.env.LOGGER_LEVEL || "info",
+});
+
+const getAwsConfig = () => ({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  configEmail: process.env.AWS_CONFIG_EMAIL,
+  region: process.env.AWS_REGION,
+  acl: process.env.AWS_ACL,
+  bucketName: process.env.AWS_BUCKET_NAME,
+});
+
 export default () => ({
   dbConfig: getDbConfig(),
   portConfig: getPortConfig(),
   authConfig: getAuthConfig(),
+  loggerConfig: getLoggerConfig(),
+  awsConfig: getAwsConfig(),
 });

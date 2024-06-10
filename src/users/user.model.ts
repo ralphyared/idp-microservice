@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ProfilePicture } from "../global/types";
 
 const Schema = mongoose.Schema;
 
@@ -9,6 +10,7 @@ const userSchema = new Schema(
     email: String,
     password: String,
     dateOfBirth: Date,
+    profilePicture: {url: String}
   },
   { timestamps: true }
 );

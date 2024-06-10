@@ -6,6 +6,7 @@ import { SignupDto } from "./dto/signup.dto.js";
 import { LoginDto } from "./dto/login.dto.js";
 import { EditProfileDto } from "./dto/edit-profile.dto.js";
 import { UserDocument } from "../global/types.js";
+import { handleFilesFormData } from "@eurisko/common-utils-node";
 
 export const signup = async (
   req: Request,
@@ -53,9 +54,22 @@ export const editProfile = async (
   next: NextFunction
 ) => {
   try {
-    await service.editProfile(req.user, req.body as EditProfileDto);
+    await service.editProfile(req.user._id, req.body as EditProfileDto);
     res.end();
   } catch (err) {
+    console.log(err)
     next(userErrorMessages.userNotFound);
   }
 };
+
+// export const uploadProfilePicture = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//   //  service.uploadProfilePicture()
+//   } catch (err) {
+//     next(userErrorMessages.userNotFound);
+//   }
+// };

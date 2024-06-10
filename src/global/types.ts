@@ -8,3 +8,7 @@ export interface UserDocument extends Document {
   lastName: string;
   dateOfBirth: Date;
 }
+
+export class ProfilePicture {
+  url!: string;
+}
